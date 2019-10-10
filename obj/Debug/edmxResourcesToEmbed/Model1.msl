@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище WSRModelContainer" CdmEntityContainer="WSREntities">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="WSRModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cloth">
+      <EntityTypeMapping TypeName="WSRModel.Cloth">
+        <MappingFragment StoreEntitySet="Cloth">
+          <ScalarProperty Name="Цена" ColumnName="Цена" />
+          <ScalarProperty Name="Длина_см" ColumnName="Длина см" />
+          <ScalarProperty Name="Ширина_см" ColumnName="Ширина см" />
+          <ScalarProperty Name="Состав" ColumnName="Состав" />
+          <ScalarProperty Name="Рисунок" ColumnName="Рисунок" />
+          <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+          <ScalarProperty Name="Название" ColumnName="Название" />
+          <ScalarProperty Name="Артикул" ColumnName="Артикул" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClothStock">
+      <EntityTypeMapping TypeName="WSRModel.ClothStock">
+        <MappingFragment StoreEntitySet="ClothStock">
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="Длина" ColumnName="Длина" />
+          <ScalarProperty Name="Ширина" ColumnName="Ширина" />
+          <ScalarProperty Name="Артикул_ткани" ColumnName="Артикул_ткани" />
+          <ScalarProperty Name="ТканьИД" ColumnName="ТканьИД" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

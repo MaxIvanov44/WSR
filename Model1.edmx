@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище WSRModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cloth">
+          <Key>
+            <PropertyRef Name="Артикул" />
+          </Key>
+          <Property Name="Артикул" Type="float" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="255" />
+          <Property Name="Цвет" Type="nvarchar" MaxLength="255" />
+          <Property Name="Рисунок" Type="nvarchar" MaxLength="255" />
+          <Property Name="Состав" Type="nvarchar" MaxLength="255" />
+          <Property Name="Ширина см" Type="float" />
+          <Property Name="Длина см" Type="float" />
+          <Property Name="Цена" Type="float" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "WSR.dbo.ClothStock" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ClothStock">
+          <Key>
+            <PropertyRef Name="ТканьИД" />
+            <PropertyRef Name="Артикул_ткани" />
+            <PropertyRef Name="Количество" />
+          </Key>
+          <Property Name="ТканьИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Артикул_ткани" Type="float" Nullable="false" />
+          <Property Name="Ширина" Type="float" />
+          <Property Name="Длина" Type="float" />
+          <Property Name="Количество" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ClothStock_Cloth">
+          <End Role="Cloth" Type="Self.Cloth" Multiplicity="1" />
+          <End Role="ClothStock" Type="Self.ClothStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cloth">
+              <PropertyRef Name="Артикул" />
+            </Principal>
+            <Dependent Role="ClothStock">
+              <PropertyRef Name="Артикул_ткани" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище WSRModelContainer">
+          <EntitySet Name="Cloth" EntityType="Self.Cloth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClothStock" EntityType="Self.ClothStock" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ClothStock].[ТканьИД] AS [ТканьИД], 
+    [ClothStock].[Артикул_ткани] AS [Артикул_ткани], 
+    [ClothStock].[Ширина] AS [Ширина], 
+    [ClothStock].[Длина] AS [Длина], 
+    [ClothStock].[Количество] AS [Количество]
+    FROM [dbo].[ClothStock] AS [ClothStock]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ClothStock_Cloth" Association="Self.FK_ClothStock_Cloth">
+            <End Role="Cloth" EntitySet="Cloth" />
+            <End Role="ClothStock" EntitySet="ClothStock" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WSRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="WSREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Cloth" EntityType="WSRModel.Cloth" />
+          <EntitySet Name="ClothStock" EntityType="WSRModel.ClothStock" />
+          <AssociationSet Name="FK_ClothStock_Cloth" Association="WSRModel.FK_ClothStock_Cloth">
+            <End Role="Cloth" EntitySet="Cloth" />
+            <End Role="ClothStock" EntitySet="ClothStock" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cloth">
+          <Key>
+            <PropertyRef Name="Артикул" />
+          </Key>
+          <Property Name="Артикул" Type="Double" Nullable="false" />
+          <Property Name="Название" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Цвет" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Рисунок" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Состав" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Ширина_см" Type="Double" />
+          <Property Name="Длина_см" Type="Double" />
+          <Property Name="Цена" Type="Double" />
+          <NavigationProperty Name="ClothStock" Relationship="WSRModel.FK_ClothStock_Cloth" FromRole="Cloth" ToRole="ClothStock" />
+        </EntityType>
+        <EntityType Name="ClothStock">
+          <Key>
+            <PropertyRef Name="ТканьИД" />
+            <PropertyRef Name="Артикул_ткани" />
+            <PropertyRef Name="Количество" />
+          </Key>
+          <Property Name="ТканьИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Артикул_ткани" Type="Double" Nullable="false" />
+          <Property Name="Ширина" Type="Double" />
+          <Property Name="Длина" Type="Double" />
+          <Property Name="Количество" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cloth" Relationship="WSRModel.FK_ClothStock_Cloth" FromRole="ClothStock" ToRole="Cloth" />
+        </EntityType>
+        <Association Name="FK_ClothStock_Cloth">
+          <End Type="WSRModel.Cloth" Role="Cloth" Multiplicity="1" />
+          <End Type="WSRModel.ClothStock" Role="ClothStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cloth">
+              <PropertyRef Name="Артикул" />
+            </Principal>
+            <Dependent Role="ClothStock">
+              <PropertyRef Name="Артикул_ткани" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище WSRModelContainer" CdmEntityContainer="WSREntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WSRModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cloth">
+            <EntityTypeMapping TypeName="WSRModel.Cloth">
+              <MappingFragment StoreEntitySet="Cloth">
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Длина_см" ColumnName="Длина см" />
+                <ScalarProperty Name="Ширина_см" ColumnName="Ширина см" />
+                <ScalarProperty Name="Состав" ColumnName="Состав" />
+                <ScalarProperty Name="Рисунок" ColumnName="Рисунок" />
+                <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Артикул" ColumnName="Артикул" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClothStock">
+            <EntityTypeMapping TypeName="WSRModel.ClothStock">
+              <MappingFragment StoreEntitySet="ClothStock">
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Длина" ColumnName="Длина" />
+                <ScalarProperty Name="Ширина" ColumnName="Ширина" />
+                <ScalarProperty Name="Артикул_ткани" ColumnName="Артикул_ткани" />
+                <ScalarProperty Name="ТканьИД" ColumnName="ТканьИД" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

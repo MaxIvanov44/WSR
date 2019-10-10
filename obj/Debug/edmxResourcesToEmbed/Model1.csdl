@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WSRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="WSREntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Cloth" EntityType="WSRModel.Cloth" />
+    <EntitySet Name="ClothStock" EntityType="WSRModel.ClothStock" />
+    <AssociationSet Name="FK_ClothStock_Cloth" Association="WSRModel.FK_ClothStock_Cloth">
+      <End Role="Cloth" EntitySet="Cloth" />
+      <End Role="ClothStock" EntitySet="ClothStock" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cloth">
+    <Key>
+      <PropertyRef Name="Артикул" />
+    </Key>
+    <Property Name="Артикул" Type="Double" Nullable="false" />
+    <Property Name="Название" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Цвет" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Рисунок" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Состав" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Ширина_см" Type="Double" />
+    <Property Name="Длина_см" Type="Double" />
+    <Property Name="Цена" Type="Double" />
+    <NavigationProperty Name="ClothStock" Relationship="WSRModel.FK_ClothStock_Cloth" FromRole="Cloth" ToRole="ClothStock" />
+  </EntityType>
+  <EntityType Name="ClothStock">
+    <Key>
+      <PropertyRef Name="ТканьИД" />
+      <PropertyRef Name="Артикул_ткани" />
+      <PropertyRef Name="Количество" />
+    </Key>
+    <Property Name="ТканьИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Артикул_ткани" Type="Double" Nullable="false" />
+    <Property Name="Ширина" Type="Double" />
+    <Property Name="Длина" Type="Double" />
+    <Property Name="Количество" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Cloth" Relationship="WSRModel.FK_ClothStock_Cloth" FromRole="ClothStock" ToRole="Cloth" />
+  </EntityType>
+  <Association Name="FK_ClothStock_Cloth">
+    <End Type="WSRModel.Cloth" Role="Cloth" Multiplicity="1" />
+    <End Type="WSRModel.ClothStock" Role="ClothStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cloth">
+        <PropertyRef Name="Артикул" />
+      </Principal>
+      <Dependent Role="ClothStock">
+        <PropertyRef Name="Артикул_ткани" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

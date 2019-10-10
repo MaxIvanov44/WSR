@@ -1,0 +1,68 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WSR"
+        xmlns:Interception="clr-namespace:System.Data.Entity.Infrastructure.Interception;assembly=EntityFramework" x:Class="WSR.Storekeeper"
+        mc:Ignorable="d"
+        Title="Storekeeper" Height="790" Width="1484">
+
+    <Grid Margin="0,0,2,-59">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="406*"/>
+            <ColumnDefinition Width="913*"/>
+            <ColumnDefinition Width="429*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Height="26" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Light" Grid.ColumnSpan="5">
+            <MenuItem Header="File">
+                <MenuItem Header="New Project" />
+                <MenuItem Header="Open Project" >
+                    <MenuItem Header="WinForms"/>
+                    <MenuItem Header="WPF" />
+                </MenuItem>
+
+                <MenuItem Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Edit" />
+            <MenuItem Header="View" />
+        </Menu>
+        <DataGrid  AutoGenerateColumns="False" ColumnWidth="*" CanUserDeleteRows="True"  x:Name="datagridCloth" HorizontalAlignment="Left" Height="697" Margin="188,31,0,0" VerticalAlignment="Top" Width="1245" Loaded="loadgrid" Grid.ColumnSpan="3" Grid.Column="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Артикул}" Header="Артикул" />
+                <DataGridTextColumn Binding="{Binding Название}" Header="Название" />
+                <DataGridTextColumn Binding="{Binding Цвет}" Header="Цвет" />
+                <DataGridTextColumn Binding="{Binding Рисунок}" Header="Рисунок" />
+                <DataGridTextColumn Binding="{Binding Состав}" Header="Состав" />
+                <DataGridTextColumn Binding="{Binding Ширина}" Header="Ширина" />
+                <DataGridTextColumn Binding="{Binding Длина}" Header="Длина" />
+                <DataGridTextColumn Binding="{Binding Цена}" Header="Цена" />
+
+
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button>
+
+                            </Button>
+
+                        </DataTemplate>
+
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Добавление ткани на склад" Grid.Column="1" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Width="167" Click="Button_Click" Height="78" Grid.ColumnSpan="2"/>
+        <Button Content="Инвентаризация" Grid.Column="1" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="167" Grid.ColumnSpan="2" Height="78"/>
+        <Button Content="Добавление ткани на склад" Grid.Column="1" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" Width="167" Click="Button_Click" Height="78" Grid.ColumnSpan="2"/>
+
+
+    </Grid>
+</Window>
